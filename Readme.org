@@ -1,9 +1,10 @@
 * ipython-shell-send
   
 This is a small emacs package to send code regions to the IPython interpreter.
-It provides functionality similar to the built-in ~python-shell-send-*~ functions.
-The main difference is that ~ipython-shell-send-*~ can send IPython magic,
-whereas ~python-shell-send-*~ cannot (unless the code region consists of a single line).
+It provides functionality similar to the built-in ~python-shell-send-*~
+functions. The main difference is that ~ipython-shell-send-*~ can send regions
+with IPython magic (such as ~!ls~ or ~%timeit~), whereas ~python-shell-send-*~
+in general cannot (aside from the special case noted in Details).
 
 =ipython-shell-send= provides the following functions which can send the buffer,
 highlighted region, or current defun to the IPython interpreter:
@@ -20,3 +21,7 @@ The code for ~ipython-shell-send-*~ is almost exactly the same as ~python-shell-
 which works by sending code to a tmpfile executed by the ~exec()~ function in Python.
 The only difference is that ~ipython-shell-send-*~ uses the IPython magic ~%run -i~ to execute the
 tmpfile.
+
+Note that the built-in ~pythen-shell-send-region~ is able to send IPython magic in one special case, when the region consists
+of only 1 line. This precludes using IPython magics in for loops or functions, and can also be inconvenient when
+needing to send multiple lines of IPython magic to the console.
