@@ -15,6 +15,9 @@ highlighted region, or current defun to the IPython interpreter:
   ipython-shell-send-defun
 #+END_SRC
 
+Note to use these functions, you must make sure
+to start an IPython shell when calling ~run-python~.
+
 ** Details 
 
 The code for ~ipython-shell-send-*~ is almost exactly the same as ~python-shell-send-*~,

@@ -1,3 +1,45 @@
+;;; ipython-shell-send.el --- Send code (including magics) to ipython shell  -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2017  Jack Kamm
+
+;; Author: Jack Kamm <jackkamm@gmail.com>
+;; Version: 1.0
+;; Keywords: tools, processes
+;; URL: https://github.com/jackkamm/ipython-shell-send-el
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; This is a package for sending code to the IPython interpreter.
+;; It provides functionality similar to the `python-shell-send-*'
+;; functions in python.el, but is able to send code regions
+;; containing IPython magic (such as `!ls' or `%timeit'),
+;; whereas python.el only has limited support for this.
+;;
+;; The functions provided by ipython-shell-send are
+;; `ipython-shell-send-region', `ipython-shell-send-buffer',
+;; and `ipython-shell-send-defun'. They are essentially equivalent
+;; to their `python-shell-send-*' equivalents in `python.el',
+;; except better able to handle IPython magic.
+;;
+;; Note to use the ipython-shell-send, you must make sure
+;; to start an IPython shell when calling `run-python'.
+
+;;; Code:
+
+
 (require 'python)
 
 (defun ipython-shell--save-temp-file (string)
@@ -30,8 +72,9 @@ t when called interactively."
                 (string-match "\n[ \t].*\n?\\'" string))
         (comint-send-string process "\n")))))
 
+;;;###autoload
 (defun ipython-shell-send-region (start end &optional send-main msg)
-  "Send the region delimited by START and END to inferior Python process.
+  "Send the region delimited by START and END to inferior IPython process.
 When optional argument SEND-MAIN is non-nil, allow execution of
 code inside blocks delimited by \"if __name__== \\='__main__\\=':\".
 When called interactively SEND-MAIN defaults to nil, unless it's
@@ -47,21 +90,23 @@ process running; defaults to t when called interactively."
     (message "Sent: %s..." (match-string 1 original-string))
     (ipython-shell-send-string string process)))
 
+;;;###autoload
 (defun ipython-shell-send-buffer (&optional send-main msg)
-  "Send the entire buffer to inferior Python process.
+  "Send the entire buffer to inferior IPython process.
 When optional argument SEND-MAIN is non-nil, allow execution of
 code inside blocks delimited by \"if __name__== \\='__main__\\=':\".
 When called interactively SEND-MAIN defaults to nil, unless it's
 called with prefix argument.  When optional argument MSG is
-non-nil, forces display of a user-friendly message if there's no
+non-nil, forces displa qqy of a user-friendly message if there's no
 process running; defaults to t when called interactively."
   (interactive (list current-prefix-arg t))
   (save-restriction
     (widen)
     (ipython-shell-send-region (point-min) (point-max) send-main msg)))
 
+;;;###autoload
 (defun ipython-shell-send-defun (&optional arg msg)
-  "Send the current defun to inferior Python process.
+  "Send the current defun to inferior IPython process.
 When argument ARG is non-nil do not include decorators.  When
 optional argument MSG is non-nil, forces display of a
 user-friendly message if there's no process running; defaults to
@@ -122,3 +167,7 @@ t when called interactively."
      process)))
 
 (provide 'ipython-shell-send)
+;;; ipython-shell-send.el ends here
+
+
+
