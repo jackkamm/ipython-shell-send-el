@@ -22,6 +22,6 @@ which works by sending code to a tmpfile executed by the ~exec()~ function in Py
 The only difference is that ~ipython-shell-send-*~ uses the IPython magic ~%run -i~ to execute the
 tmpfile.
 
-Note that the built-in ~pythen-shell-send-region~ is able to send IPython magic in one special case, when the region consists
+Note that ~python.el~ is able to send IPython magic in one special case, when the region consists
 of only 1 line. This precludes using IPython magics in for loops or functions, and can also be inconvenient when
 needing to send multiple lines of IPython magic to the console. Thus my motivation for writing this package.
