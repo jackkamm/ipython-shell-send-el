@@ -4,6 +4,7 @@
 
 ;; Author: Jack Kamm <jackkamm@gmail.com>
 ;; Version: 1.0
+;; Package-Requires: ((emacs "24"))
 ;; Keywords: tools, processes
 ;; URL: https://github.com/jackkamm/ipython-shell-send-el
 
@@ -42,7 +43,7 @@
 
 (require 'python)
 
-(defun ipython-shell--save-temp-file (string)
+(defun ipython-shell-send--save-temp-file (string)
   (let* ((temporary-file-directory
           (if (file-remote-p default-directory)
               (concat (file-remote-p default-directory) "/tmp")
@@ -63,7 +64,7 @@ t when called interactively."
    (list (read-string "Python command: ") nil t))
   (let ((process (or process (python-shell-get-process-or-error msg))))
     (if (string-match ".\n+." string)   ;Multiline.
-        (let* ((temp-file-name (ipython-shell--save-temp-file string))
+        (let* ((temp-file-name (ipython-shell-send--save-temp-file string))
                (file-name (or (buffer-file-name) temp-file-name)))
           (message temp-file-name)
           (ipython-shell-send-file file-name process temp-file-name t))
