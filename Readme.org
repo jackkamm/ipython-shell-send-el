@@ -2,8 +2,8 @@
   
 This is a small emacs package to send code regions to the IPython interpreter.
 It provides functionality similar to the built-in ~python-shell-send-*~
-functions. The main difference is that ~ipython-shell-send-*~ can send regions
-with IPython magic (such as ~!ls~ or ~%timeit~), whereas ~python-shell-send-*~
+functions from ~python.el~. The main difference is that ~ipython-shell-send can send regions
+with IPython magic (such as ~!ls~ or ~%timeit~), whereas ~python.el~
 in general cannot (aside from the special case noted in Details).
 
 =ipython-shell-send= provides the following functions which can send the buffer,
