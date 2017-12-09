@@ -18,9 +18,9 @@ highlighted region, or current defun to the IPython interpreter:
 ** Details 
 
 The code for ~ipython-shell-send-*~ is almost exactly the same as ~python-shell-send-*~,
-which works by sending code to a tmpfile executed by the ~exec()~ function in Python.
+which works by sending code to a tmpfile executed by the Python function ~exec()~.
 The only difference is that ~ipython-shell-send-*~ uses the IPython magic ~%run -i~ to execute the
-tmpfile.
+tmpfile instead.
 
 Note that ~python.el~ is able to send IPython magic in one special case, when the region consists
 of only 1 line. This precludes using IPython magics in for loops or functions, and can also be inconvenient when
