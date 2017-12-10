@@ -44,6 +44,8 @@
 (require 'python)
 
 (defun ipython-shell-send--save-temp-file (string)
+  "Send STRING to temp file with .ipy suffix.
+Returns the tempfile name."
   (let* ((temporary-file-directory
           (if (file-remote-p default-directory)
               (concat (file-remote-p default-directory) "/tmp")
