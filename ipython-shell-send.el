@@ -3,7 +3,7 @@
 ;; Copyright (C) 2017  Jack Kamm
 
 ;; Author: Jack Kamm <jackkamm@gmail.com>
-;; Version: 1.0
+;; Version: 1.0.0
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: tools, processes
 ;; URL: https://github.com/jackkamm/ipython-shell-send-el
