@@ -5,7 +5,7 @@ It adds the following two features:
 1. Connect to and run existing jupyter consoles, e.g. on a remote server.
 2. Allow IPython magic in code blocks sent to the inferior Python buffer.
 
-The first feature is provided by the function ~ipython-shell-send/run-jupyter-existing~. Calling this function will prompt for an existing jupyter kernel, and then run it in the inferior Python buffer from ~python.el~. To run a remote jupyter kernel, call ~ipython-shell-send/run-jupyter-existing~ from within a Tramp buffer visiting the remote machine.
+The first feature is provided by the function ~ipython-shell-send/run-jupyter-existing~. Calling this function will prompt for an existing jupyter kernel, and run it in an inferior Python buffer. To run a remote jupyter kernel, call ~ipython-shell-send/run-jupyter-existing~ from within a Tramp buffer visiting the remote machine.
 
 The second feature is provided by the following functions:
 
@@ -26,3 +26,9 @@ First, start a Jupyter console named "my-remote-console" on the remote machine:
 #+END_SRC
 
 Then in emacs, visit any file on the remote machine, e.g. =C-x C-f /scp:username@remotehost:~=. Then call =M-x ipython-shell-send/run-jupyter-existing=, and enter "my-remote-console" at the prompt. This will create the usual inferior =*Python*= buffer, but connected to a remote Jupyter console instead of starting a new Python subprocess.
+
+** Remote jupyter kernels with ob-python
+
+~ipython-shell-send/run-jupyter-existing~ can be used with =ob-python= to create an org-notebook running a persistent remote Jupyter kernel, similar to running a remote Jupyter notebook server. Simply add a =:session= argument to org-babel SRC blocks to use the inferior Python buffer started by ~ipython-shell-send/run-jupyter-existing~.
+
+Compared to [[https://github.com/gregsexton/ob-ipython]], using ob-python with ~ipython-shell-send~ provides a simpler way to connect to remote kernels, and also allows features such as interrupting the remote kernel, which is not supported in ob-ipython. However, ob-ipython provides other features lacking in ob-python+ipython-shell-send, such as asynchronous evaluation.
