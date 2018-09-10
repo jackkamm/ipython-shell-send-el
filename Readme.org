@@ -5,7 +5,7 @@ It adds the following two features:
 1. Connect to and run existing jupyter consoles, e.g. on a remote server.
 2. Allow IPython magic in code blocks sent to the inferior Python buffer.
 
-The first feature is provided by the function ~ipython-shell-send/run-jupyter-existing~. Calling this function will prompt for an existing jupyter kernel, and run it in an inferior Python buffer. To run a remote jupyter kernel, call ~ipython-shell-send/run-jupyter-existing~ from within a Tramp buffer visiting the remote machine.
+The first feature is provided by the function ~ipython-shell-send/run-jupyter-existing~. Calling this function will prompt for an existing jupyter kernel, and run it in an inferior Python buffer. To run a remote jupyter kernel, simply call this function from within a Tramp buffer visiting the remote machine.
 
 The second feature is provided by the following functions:
 
