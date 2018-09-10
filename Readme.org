@@ -27,7 +27,7 @@ First, start a Jupyter console named "my-remote-console" on the remote machine:
 
 Then in emacs, visit any file on the remote machine, e.g. =C-x C-f /scp:username@remotehost:~=. Then call =M-x ipython-shell-send/run-jupyter-existing=, and enter "my-remote-console" at the prompt. This will create the usual inferior =*Python*= buffer, but connected to a remote Jupyter console instead of starting a new Python subprocess.
 
-** Remote jupyter kernels with ob-python
+** Remote jupyter kernels in org-mode with ob-python
 
 Use =ob-python= with ~ipython-shell-send/run-jupyter-existing~ to create org-babel notebooks running remote Jupyter kernels, similar to running a remote Jupyter notebook server. Simply add a =:session= argument to org-babel SRC blocks to use the inferior Python buffer started by ~ipython-shell-send/run-jupyter-existing~.
 
