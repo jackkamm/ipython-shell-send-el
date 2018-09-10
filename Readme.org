@@ -1,13 +1,13 @@
 * ipython-shell-send
-  
-This is a small emacs package to send code regions to the IPython interpreter.
-It provides functionality similar to the built-in ~python-shell-send-*~
-functions from ~python.el~. The main difference is that ~ipython-shell-send~ can send regions
-containing IPython magic (such as ~!ls~ or ~%timeit~), whereas ~python.el~
-in general cannot (aside from the special case noted in Details/Note).
 
-=ipython-shell-send= provides the following functions which can send the buffer,
-highlighted region, or current defun to the IPython interpreter:
+This package adds extra IPython functionality for Emacs' python.el.
+It adds the following two features:
+1. Connect to and run existing jupyter consoles, e.g. on a remote server.
+2. Allow IPython magic in code blocks sent to the inferior Python buffer.
+
+The first feature is provided by the function ~ipython-shell-send/run-jupyter-existing~. Calling this function will prompt for an existing jupyter kernel, and then run it in the inferior Python buffer from ~python.el~. To run a remote jupyter kernel, call ~ipython-shell-send/run-jupyter-existing~ from within a Tramp buffer visiting the remote machine.
+
+The second feature is provided by the following functions:
 
 #+BEGIN_SRC emacs-lisp
   ipython-shell-send-buffer
@@ -15,18 +15,14 @@ highlighted region, or current defun to the IPython interpreter:
   ipython-shell-send-defun
 #+END_SRC
 
-Note to use these functions, you must make sure
-to start an IPython shell when calling ~run-python~.
+which are analogous to their counterparts ~python-shell-*~ from ~python.el~, except that they can handle IPython magic commands such as ~!ls~ or ~%timeit~.
 
-** Details 
+** Example: running a remote Jupyter kernel in Emacs
 
-The code for ~ipython-shell-send-*~ is almost exactly the same as ~python-shell-send-*~,
-which works by sending code to a tmpfile executed by the Python function ~exec()~.
-The only difference is that ~ipython-shell-send-*~ uses the IPython magic ~%run -i~ to execute the
-tmpfile instead.
+First, start a Jupyter console named "my-remote-console" on the remote machine:
 
-*** Note
+#+BEGIN_SRC sh
+  jupyter --console -f my-remote-console
+#+END_SRC
 
-Note that the built-in ~python.el~ is able to send IPython magic in one special case, when the region consists
-of only 1 line. This precludes using IPython magics in for loops or functions, and can also be inconvenient when
-needing to send multiple lines of IPython magic to the console. Thus my motivation for writing this package.
+Then in emacs, visit any file on the remote machine, e.g. =C-x C-f /scp:username@remotehost:~=. Then call =M-x ipython-shell-send/run-jupyter-existing=, and enter "my-remote-console" at the prompt. This will create the usual inferior =*Python*= buffer, but connected to a remote Jupyter console instead of starting a new Python subprocess.
