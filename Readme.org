@@ -29,6 +29,6 @@ Then in emacs, visit any file on the remote machine, e.g. =C-x C-f /scp:username
 
 ** Remote jupyter kernels with ob-python
 
-~ipython-shell-send/run-jupyter-existing~ can be used with =ob-python= to create an org-notebook running a persistent remote Jupyter kernel, similar to running a remote Jupyter notebook server. Simply add a =:session= argument to org-babel SRC blocks to use the inferior Python buffer started by ~ipython-shell-send/run-jupyter-existing~.
+Use =ob-python= with ~ipython-shell-send/run-jupyter-existing~ to create org-babel notebooks running remote Jupyter kernels, similar to running a remote Jupyter notebook server. Simply add a =:session= argument to org-babel SRC blocks to use the inferior Python buffer started by ~ipython-shell-send/run-jupyter-existing~.
 
 Compared to [[https://github.com/gregsexton/ob-ipython]], using ob-python with ~ipython-shell-send~ provides a simpler way to connect to remote kernels, and also allows features such as interrupting the remote kernel, which is not supported in ob-ipython. However, ob-ipython provides other features lacking in ob-python+ipython-shell-send, such as asynchronous evaluation.
