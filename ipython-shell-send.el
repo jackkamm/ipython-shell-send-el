@@ -162,9 +162,13 @@ t when called interactively."
      (format
       (concat
        "import IPython, os;"
-       "IPython.get_ipython().magic('''run -i %s''');"
+       "__pyfile = open('''%s''');"
+       "__code = __pyfile.read();"
+       "__pyfile.close();"
        (when (and delete temp-file-name)
-         (format "os.remove('''%s''');" temp-file-name)))
+         (format "os.remove('''%s''');" temp-file-name))
+       ;; assign & omit final semicolon, to print the result exactly once
+       "__code=IPython.get_ipython().run_cell(__code)")
       (or temp-file-name file-name))
      process)))
 
