@@ -3,7 +3,7 @@
 ;; Copyright (C) 2017  Jack Kamm
 
 ;; Author: Jack Kamm <jackkamm@gmail.com>
-;; Version: 1.0.2
+;; Version: 1.1.1
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: tools, processes
 ;; URL: https://github.com/jackkamm/ipython-shell-send-el
@@ -23,20 +23,22 @@
 
 ;;; Commentary:
 
-;; This package adds extra IPython functionality for Emacs' python.el.
-;; It adds the following two features:
-;; 1. Connect to and run existing jupyter consoles, e.g. on a remote server.
-;; 2. Allow IPython magic in code blocks sent to the inferior Python buffer.
+;; This is a package for sending code to the IPython interpreter.
+;; It provides functionality similar to the `python-shell-send-*'
+;; functions in python.el, but is able to send code regions
+;; containing IPython magic (such as `!ls' or `%timeit'),
+;; whereas python.el only has limited support for this.
+;; In addition, the final result of executed ipython regions
+;; are printed, as in Jupyter cell evaluation.
 ;;
-;; The first feature is provided by the function
-;; `ipython-shell-send/run-jupyter-existing', which is analogous
-;; to python.el's `run-python', except it connects to an existing Jupyter
-;; console instead of starting a new Python subprocess.
+;; The functions provided by ipython-shell-send are
+;; `ipython-shell-send-region', `ipython-shell-send-buffer',
+;; and `ipython-shell-send-defun'. They are essentially equivalent
+;; to their `python-shell-send-*' equivalents in `python.el',
+;; except better able to handle IPython magic.
 ;;
-;; The second feature is provided by the functions
-;; `ipython-shell-send-buffer', `ipython-shell-send-region', and
-;; `ipython-shell-send-defun', which are analogous to `python-shell-send-*'
-;; in python.el, except that they can handle IPython magic commands.
+;; Note to use the ipython-shell-send, you must make sure
+;; to start an IPython shell when calling `run-python'.
 
 ;;; Code:
 
