@@ -1,13 +1,12 @@
 * ipython-shell-send
 
-This package adds extra IPython functionality for Emacs' python.el.
-It adds the following two features:
-1. Connect to and run existing jupyter consoles, e.g. on a remote server.
-2. Allow IPython magic in code blocks sent to the inferior Python buffer.
+This is a small emacs package to send code regions to the IPython interpreter.
+It provides functionality similar to the built-in ~python-shell-send-*~
+commands, but with two differences:
+1. IPython magic commands such as ~!ls~ or ~%timeit~ work
+2. The result of the final expression is printed, as in Jupyter cell execution
 
-The first feature is provided by the function ~ipython-shell-send/run-jupyter-existing~. Calling this function will prompt for an existing jupyter kernel, and run it in an inferior Python buffer. To run a remote jupyter kernel, simply call this function from within a Tramp buffer visiting the remote machine.
-
-The second feature is provided by the following functions:
+The following functions send the buffer, highlighted region, or current defun to a running IPython interpreter:
 
 #+BEGIN_SRC emacs-lisp
   ipython-shell-send-buffer
@@ -15,20 +14,4 @@ The second feature is provided by the following functions:
   ipython-shell-send-defun
 #+END_SRC
 
-which are analogous to their counterparts ~python-shell-*~ from ~python.el~, except that they can handle IPython magic commands such as ~!ls~ or ~%timeit~.
-
-** Example: running a remote Jupyter kernel in Emacs
-
-First, start a Jupyter console named "my-remote-console" on the remote machine:
-
-#+BEGIN_SRC sh
-  jupyter --console -f my-remote-console
-#+END_SRC
-
-Then in emacs, visit any file on the remote machine, e.g. =C-x C-f /scp:username@remotehost:~=. Then call =M-x ipython-shell-send/run-jupyter-existing=, and enter "my-remote-console" at the prompt. This will create the usual inferior =*Python*= buffer, but connected to a remote Jupyter console instead of starting a new Python subprocess.
-
-** Remote jupyter kernels in org-mode with ob-python
-
-Use =ob-python= with ~ipython-shell-send/run-jupyter-existing~ to mimic some of the functionality of a remote Jupyter notebook server. Simply connect to a remote Jupyter kernel as above, then add a =:session= argument to org-babel SRC blocks to use the corresponding inferior Python buffer.
-
-Compared to [[https://github.com/gregsexton/ob-ipython][ob-ipython]], using ob-python with ~ipython-shell-send~ provides a simpler way to connect to remote kernels. However, note that ob-ipython includes important features lacking in ob-python, such as asynchronous evaluation.
+To use these functions, you should configure ~run-python~ to launch an IPython console, instead of a regular Python console.

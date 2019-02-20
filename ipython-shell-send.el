@@ -172,58 +172,5 @@ t when called interactively."
       (or temp-file-name file-name))
      process)))
 
-(defun ipython-shell-send/run-jupyter-existing--command (kernel)
-  "Return string for the command to connect to an existing jupyter KERNEL."
-  (concat "jupyter console --simple-prompt --existing " kernel))
-
-;;;###autoload
-(defun ipython-shell-send/run-jupyter-existing (dedicated show)
-  "Run existing Jupyter kernel within inferior Python buffer.
-
-Prompts for an existing kernel, then opens it in the standard
-inferior Python buffer from python.el.  For example, the kernel
-may correspond to a running Jupyter notebook, or may have been
-started manually with the 'jupyter console' command.  Leaving
-the prompt blank will select the most recent kernel.
-
-To connect to a remote kernel, call this function from within
-a Tramp buffer on the remote machine.
-
-When called interactively with `prefix-arg', it allows the
-user to edit such choose whether the interpreter
-should be DEDICATED for the current buffer.  When numeric
-prefix arg is other than 0 or 4 do not SHOW."
-  (interactive
-   (if current-prefix-arg
-       (list
-        (y-or-n-p "Make dedicated process? ")
-        (= (prefix-numeric-value current-prefix-arg) 4))
-     (list nil t)))
-  (run-python
-   (read-shell-command
-    "Run Python: "
-    (ipython-shell-send/run-jupyter-existing--command
-     (condition-case err
-	 (completing-read
-	  "Kernel file (blank for most recent): "
-	  (cdr
-	   (cdr
-	    (directory-files
-	     (concat
-	      (file-remote-p default-directory)
-	      (string-trim
-	       (let ((shell-file-name "/bin/sh"))
-		 (shell-command-to-string
-		  (concat "python3 -c 'import jupyter_core.paths as jsp; "
-			  "print(jsp.jupyter_runtime_dir())'"))))))))
-	  nil nil "")
-       (file-error
-	(warn (error-message-string err))
-	nil))))
-   dedicated show))
-
 (provide 'ipython-shell-send)
 ;;; ipython-shell-send.el ends here
-
-
-
